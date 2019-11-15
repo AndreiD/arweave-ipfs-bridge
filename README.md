@@ -15,10 +15,9 @@ A bridge to connect IPFS to Arweave
 
 Tested on ubuntu 19.04
 
-- start and configure ipfs to your liking
-- start hooverd and connect it to a wallet
-- get the binary file ***iab***
-- copy the configuration.json file in the same directory (modify it to your liking)
+- Start and configure ipfs to your liking
+- If you use Ubuntu, get the binary file **iab**, if not you'll have to build/run it
+- Copy the configuration.json file in the same directory (modify it to your liking)
 - run ./iab **defaults on 0.0.0.0:5555**
 
 ### Build it
@@ -31,7 +30,7 @@ go build -o YOUR_BINARY_NAME
 ~~~~
 
 for installing go check: https://golang.org/doc/install
-it should run without problems also on macOS & Windows
+it should build & run without problems on macOS & Windows
 
 #### Configuration file
 
