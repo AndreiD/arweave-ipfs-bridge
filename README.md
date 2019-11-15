@@ -1,4 +1,4 @@
-# :zap: IAB :zap: IPFS Arweave Bridge 
+# :zap: I.A.B. :zap: *I*PFS *A*rweave *B*ridge 
 
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AndreiD/arweave-ipfs-bridge/blob/master/LICENSE)
 
