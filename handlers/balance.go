@@ -3,20 +3,15 @@ package handlers
 import (
 	"aif/arweave"
 	"aif/configs"
+	"aif/utils"
 	"github.com/gin-gonic/gin"
 	"math"
 	"math/big"
 	"net/http"
 )
 
-// GetBalance of tokens
+// GetBalance of tokens of the wallet in use
 func GetBalance(c *gin.Context) {
-
-	address := c.Query("address")
-	if address == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "please provide the address in the query ex: ?address=qGwglm54w6I9-CCcNSAjvWzqGNZfb0zAUNkXYVYN5LY"})
-		return
-	}
 
 	configuration, ok := c.MustGet("configuration").(*configs.ViperConfiguration)
 	if !ok {
@@ -24,7 +19,16 @@ func GetBalance(c *gin.Context) {
 		return
 	}
 
-	output, err := arweave.GetBalance(address, configuration)
+	// get my address
+	arWallet := arweave.NewWallet()
+	err := arWallet.LoadKeyFromFile(configuration.Get("walletFile"))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	output, _, err := utils.GetRequest(configuration.Get("nodeURL") + "/wallet/" + arWallet.Address() + "/balance")
+
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

@@ -15,12 +15,20 @@ func InitializeRouter() {
 	// pong
 	api.GET("/ping", handlers.Ping)
 
-	// transfer a file from IFPS to Arweave
-	api.GET("/transfer", handlers.TransferIPFSToArweave)
+	// get a file from IPFS by it's hash
+	api.GET("/ipfs", handlers.GetFromIPFS)
 
-	// check the balance of arweave tokens
+	// get a file from AR by it's transaction ID
+	api.GET("/arweave", handlers.GetFromArweave)
+
+	// transfer a file from IFPS to AR
+	api.POST("/transfer", handlers.TransferIPFSToArweave)
+
+	// checks if a tx has been mined
+	api.GET("/check_tx_arweave", handlers.CheckTxArweave)
+
+	// check the balance of AR tokens
 	api.GET("/balance", handlers.GetBalance)
-
 
 	// In case no route is found
 	router.NoRoute(func(c *gin.Context) {

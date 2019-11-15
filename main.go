@@ -1,7 +1,6 @@
 package main
 
 import (
-	"aif/arweave"
 	"aif/configs"
 	"aif/utils/log"
 	"context"
@@ -10,6 +9,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 	"net/http"
 	"os"
+	"os/exec"
 	"os/signal"
 	"strconv"
 	"time"
@@ -20,14 +20,14 @@ const version = "1.0 Alpha"
 var router *gin.Engine
 
 // Configuration .
-var Configuration *configs.ViperConfiguration //TODO: no need to export it ?
+var configuration *configs.ViperConfiguration
 
 func init() {
 
-	Configuration = configs.NewConfiguration()
-	Configuration.Init()
+	configuration = configs.NewConfiguration()
+	configuration.Init()
 
-	debug := Configuration.GetBool("debug")
+	debug := configuration.GetBool("debug")
 	log.Init(debug)
 
 	log.Println("==================================================")
@@ -35,13 +35,18 @@ func init() {
 	log.Println("==================================================")
 	log.Println()
 
+	// check if IPFS daemon is running
+	out, err := exec.Command("ipfs", "swarm", "peers").CombinedOutput()
+	if err != nil {
+		log.Fatalf("check if IPFS daemon is running. Error %s", string(out))
+	}
 }
 
 func main() {
 
 	router = gin.New()
 
-	if Configuration.GetBool("debug") {
+	if configuration.GetBool("debug") {
 		gin.SetMode(gin.DebugMode)
 	} else {
 		gin.SetMode(gin.ReleaseMode)
@@ -51,12 +56,12 @@ func main() {
 	router.Use(gin.Recovery())
 	router.Use(requestIDMiddleware())
 	router.Use(corsMiddleware())
-	router.Use(configurationMiddleware(Configuration))
+	router.Use(configurationMiddleware(configuration))
 
 	InitializeRouter()
 
 	server := &http.Server{
-		Addr:           Configuration.Get("server.host") + ":" + strconv.Itoa(Configuration.GetInt("server.port")),
+		Addr:           configuration.Get("server.host") + ":" + strconv.Itoa(configuration.GetInt("server.port")),
 		Handler:        router,
 		ReadTimeout:    5 * time.Second,
 		WriteTimeout:   5 * time.Second,
@@ -71,13 +76,11 @@ func main() {
 		}
 	}()
 
-	log.Printf("Running on %s:%s", Configuration.Get("server.host"), strconv.Itoa(Configuration.GetInt("server.port")))
-
-	arweave.Initialize(Configuration)
+	log.Printf("Running on %s:%s", configuration.Get("server.host"), strconv.Itoa(configuration.GetInt("server.port")))
 
 	// Wait for interrupt signal to gracefully shutdown the server with
 	// a timeout of 5 seconds.
-	quit := make(chan os.Signal)
+	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
 	log.Println("initiated server shutdown")

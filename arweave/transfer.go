@@ -2,35 +2,60 @@ package arweave
 
 import (
 	"aif/configs"
-	"github.com/Dev43/arweave-go/batchchunker"
-	"github.com/Dev43/arweave-go/transactor"
+	"aif/utils"
+	"aif/utils/log"
+	"bytes"
+	"context"
 	"os"
 )
 
-// Transfer on Arweave blockchain. Returns transaction hash,  error
-func Transfer(fileName string, configuration *configs.ViperConfiguration) ([]string, error) {
+// original from: https://github.com/Dev43/arweave-go
+
+// Transfer on arweave blockchain. Returns transaction hash, error
+func Transfer(ipfsHash string, fileName string, configuration *configs.ViperConfiguration) (string, error) {
 
 	f, err := os.Open(fileName)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
-	info, err := f.Stat()
+	defer utils.Close(f)
+
+	buf := new(bytes.Buffer)
+	_, err = buf.ReadFrom(f)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
 	// creates a new batch
-	ar, err := transactor.NewTransactor(configuration.Get("nodeURL"))
+	ar, err := NewTransactor(configuration.Get("nodeURL"))
 	if err != nil {
-		return nil, err
-	}
-	newB := batchchunker.NewBatch(ar, myWallet, f, info.Size())
-
-	// sends all the transactions
-	list, err := newB.SendBatchTransaction()
-	if err != nil {
-		return nil, err
+		return "", err
 	}
 
-	return list, nil
+	arWallet := NewWallet()
+	err = arWallet.LoadKeyFromFile(configuration.Get("walletFile"))
+	if err != nil {
+		return "", err
+	}
+
+	txBuilder, err := ar.CreateTransaction(ipfsHash, context.Background(), arWallet, "0", buf.Bytes(), "")
+	if err != nil {
+		return "", err
+	}
+
+	// sign the transaction
+	txn, err := txBuilder.Sign(arWallet)
+	if err != nil {
+		return "", err
+	}
+
+	// send the transaction
+	resp, err := ar.SendTransaction(context.Background(), txn)
+	if err != nil {
+		return "", err
+	}
+
+	log.Printf("arweave node responded %s", resp)
+
+	return txn.Hash(), nil
 }

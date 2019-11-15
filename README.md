@@ -1,5 +1,7 @@
 # :zap: AIB :zap: Arweave IPFS Bridge 
 
+[![License](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AndreiD/arweave-ipfs-bridge/blob/master/LICENSE)
+
 A bridge to connect IPFS to Arweave
 
 ### Features:
@@ -19,18 +21,43 @@ Tested on ubuntu 19.04
 - copy the configuration.json file in the same directory (modify it to your liking)
 - run ./aib **defaults on 0.0.0.0:5555**
 
+### Configuration file
+
+~~~~
+{
+  "debug": true,
+  "nodeURL": "https://arweave.net",
+  "walletFile": "/path_to_your_wallet/arweave-wallet.json",
+  "cleanup": true,
+  "server": {
+    "host": "0.0.0.0",
+    "port": 5555
+  }
+}
+~~~~
+
+Where:
+
+- debug: runs with more verbosity
+- nodeURL: how to connect to arweave ?
+- walletFile: the json AR wallet file
+- cleanup: deletes the files after they get retrived
+- server host/port: how to run this service
+
 
 ## API Endpoints
 
 #### GET /api/ping 
    
+used to check if the service is alive
+
 ~~~~
 pong
 ~~~~
    
-#### GET /api/balance?wallet=YOUR_WALLET_HERE
+#### GET /api/balance
 
-> example: /balance?wallet=qGwglm54w6I9-CCcNSAjvWzqGNZfb0zAUNkXYVYN5LY
+return your balance of AR Tokens
 
 ~~~~
 {
@@ -46,23 +73,54 @@ pong
 ~~~~
 {
     "duration": "953.239662ms",
-    "hash": "g9e6nzaiz74-RTCiXJwmOvQLtExT-wlx5oiC4ybqTtQ",
-    "output": "Transaction g9e6nzaiz74-RTCiXJwmOvQLtExT-wlx5oiC4ybqTtQ dispatched to arweave.net:443 with response: 200.\n"
+    "id": "g9e6nzaiz74-RTCiXJwmOvQLtExT-wlx5oiC4ybqTtQ"
 }
 ~~~~
 
 Where:
 
 - duration gives you the time it took to get it from IPFS and to upload it to Arweave
-- hash represents the arweave transaction hash
-- output: represents the output of hooverd
+- id represents the arweave transaction id
+
+**Attention**
+
+The transaction ID is not mined yet. You can get the status of a transaction by calling the API below
 
    
-      
-#### Why it's a REST API
+#### GET /api/check_tx_arweave?transaction_id=TRANSACTION_ID
+
+> example: /api/check_tx_arweave?transaction_id=bnRQhVkook_lPv8uxuDRcj-wC5R2nfVps-2qA6-81WU
+
+~~~~
+the transaction details or it's status (ex: pending)
+~~~~
 
 
+### Other helper API calls that you might need
 
+#### GET /api/ipfs?hash=IPFS_HASH
+
+> example: /api/ipfs?hash=QmbRmU9vYwH9Hhn1eH1WEFVS9sugpGSdJrfqtuZ329EgZA
+
+~~~~
+content of the file from IPFS
+~~~~
+
+#### GET /api/arweave?transaction_id=TRANSACTION_ID&decode=true
+
+> example: /api/arweave?transaction_id=GyrTvuUBK9AgVLGBA8SsOHkUYmWApNqvJtMjJZZIvbQ&decode=true
+
+~~~~
+content of the file from Arweave
+~~~~
+
+Where:
+
+- decoded: if you want it decoded or not
+
+### Special thanks to:
+
+https://github.com/Dev43/arweave-go -> for the transaction signing & transmitting code
 
 ### Bugs / Features / Questions
 
