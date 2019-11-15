@@ -1,4 +1,4 @@
-# :zap: AIB :zap: Arweave IPFS Bridge 
+# :zap: IAB :zap: IPFS Arweave Bridge 
 
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AndreiD/arweave-ipfs-bridge/blob/master/LICENSE)
 
@@ -17,7 +17,7 @@ Tested on ubuntu 19.04
 
 - start and configure ipfs to your liking
 - start hooverd and connect it to a wallet
-- get the binary file aib
+- get the binary file ***iab***
 - copy the configuration.json file in the same directory (modify it to your liking)
 - run ./aib **defaults on 0.0.0.0:5555**
 
