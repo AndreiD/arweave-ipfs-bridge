@@ -60,7 +60,7 @@ Where:
 ## API Endpoints
 
 #### Ping
-##### GET /api/ping 
+##### :point_right: GET /api/ping 
    
 used to check if the service is alive
 
@@ -69,7 +69,7 @@ pong
 ~~~~
    
 #### Check your AR Token balance
-##### GET /api/balance
+##### :point_right: GET /api/balance
 
 return your balance of AR Tokens
 
@@ -80,7 +80,7 @@ return your balance of AR Tokens
 }
 ~~~~
    
-#### Transfer from IPFS to Arweave
+#### :point_right: Transfer from IPFS to Arweave
 ##### GET /api/transfer?hash=IPFS_HASH_HERE
 
 > example: /api/transfer?hash=QmUNXr47Bja3aHUMfhXX5mMWTFJKuoUGETcA48vHG7dhag
@@ -102,7 +102,7 @@ Where:
 The transaction ID is not mined yet. You can get the status of a transaction by calling the API below
 
    
-#### Retrive a transaction or check if it's pending
+#### :point_right: Retrive a transaction or check if it's pending
 ##### GET /api/check_tx_arweave?transaction_id=TRANSACTION_ID
 
 > example: /api/check_tx_arweave?transaction_id=bnRQhVkook_lPv8uxuDRcj-wC5R2nfVps-2qA6-81WU
