@@ -59,8 +59,8 @@ Where:
 
 ## API Endpoints
 
-#### Ping
-##### :point_right: GET /api/ping 
+#### :point_right: Ping
+##### GET /api/ping 
    
 used to check if the service is alive
 
@@ -68,8 +68,8 @@ used to check if the service is alive
 pong
 ~~~~
    
-#### Check your AR Token balance
-##### :point_right: GET /api/balance
+#### :point_right: Check your AR Token balance
+##### GET /api/balance
 
 return your balance of AR Tokens
 
@@ -96,10 +96,7 @@ Where:
 
 - duration gives you the time it took to get it from IPFS and to upload it to Arweave
 - id represents the arweave transaction id
-
-**Attention**
-
-The transaction ID is not mined yet. You can get the status of a transaction by calling the API below
+- *Attention* The transaction ID is not mined yet. You can get the status of a transaction by calling the API below
 
    
 #### :point_right: Retrive a transaction or check if it's pending
@@ -114,7 +111,7 @@ the transaction details or it's status (ex: pending)
 
 ### Other helper API calls that you might need
 
-#### Retrieve a file from IPFS
+#### :point_right: Retrieve a file from IPFS
 
 ##### GET /api/ipfs?hash=IPFS_HASH
 
@@ -124,7 +121,7 @@ the transaction details or it's status (ex: pending)
 content of the file from IPFS
 ~~~~
 
-#### Retrieve a file from IPFS
+#### :point_right: Retrieve a file from Arweave
 
 ##### GET /api/arweave?transaction_id=TRANSACTION_ID&decode=true
 
