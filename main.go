@@ -38,7 +38,7 @@ func init() {
 	// check if IPFS daemon is running
 	out, err := exec.Command("ipfs", "swarm", "peers").CombinedOutput()
 	if err != nil {
-		log.Fatalf("check if IPFS daemon is running. Error %s", string(out))
+		log.Fatalf("please check if IPFS daemon is running. Error %s", string(out))
 	}
 }
 
