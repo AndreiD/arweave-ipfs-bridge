@@ -1,6 +1,13 @@
-# :zap: AIB :zap: -> Arweave IPFS Bridge 
+# :zap: AIB :zap: Arweave IPFS Bridge 
 
 A bridge to connect IPFS to Arweave
+
+### Features:
+
+- only 3 GET requests
+- you easily split it into multiple services
+- load balance it, use multiple wallets not just one
+- easy to integrated with almost anything
 
 ### How to use it ?
 
@@ -10,20 +17,20 @@ Tested on ubuntu 19.04
 - start hooverd and connect it to a wallet
 - get the binary file aib
 - copy the configuration.json file in the same directory (modify it to your liking)
-- run ./aib 
+- run ./aib **defaults on 0.0.0.0:5555/api**
 
 
-### Endpoints
+## API Endpoints
 
-##### GET /api/ping 
+#### GET /api/ping 
    
-   - responds with "pong"
+~~~~
+pong
+~~~~
    
-##### GET /api/balance?wallet=YOUR_WALLET_HERE
+#### GET /api/balance?wallet=YOUR_WALLET_HERE
 
-example: /balance?wallet=qGwglm54w6I9-CCcNSAjvWzqGNZfb0zAUNkXYVYN5LY
-
-response:
+> example: /balance?wallet=qGwglm54w6I9-CCcNSAjvWzqGNZfb0zAUNkXYVYN5LY
 
 ~~~~
 {
@@ -32,11 +39,9 @@ response:
 }
 ~~~~
    
-##### GET /api/transfer?hash=IPFS_HASH_HERE
+#### GET /api/transfer?hash=IPFS_HASH_HERE
 
-example: /api/transfer?hash=QmUNXr47Bja3aHUMfhXX5mMWTFJKuoUGETcA48vHG7dhag
-
-response:
+> example: /api/transfer?hash=QmUNXr47Bja3aHUMfhXX5mMWTFJKuoUGETcA48vHG7dhag
 
 ~~~~
 {
@@ -46,7 +51,7 @@ response:
 }
 ~~~~
 
-where:
+Where:
 
 - duration gives you the time it took to get it from IPFS and to upload it to Arweave
 - hash represents the arweave transaction hash
@@ -54,11 +59,9 @@ where:
 
    
       
-### Why it's a REST API
+#### Why it's a REST API
 
-- you easily split it into multiple services
-- load balance it, use multiple wallets not just one
-- easy to integrated with almost anything
+
 
 
 ### Bugs / Features / Questions
