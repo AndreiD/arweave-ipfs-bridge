@@ -1,4 +1,4 @@
-# :bridge_at_night: I.A.B.- IPFS Arweave Bridge 
+# :bridge_at_night: IPFS Arweave Bridge 
 
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AndreiD/arweave-ipfs-bridge/blob/master/LICENSE)
 
