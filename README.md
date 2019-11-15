@@ -138,7 +138,7 @@ content of the file from Arweave
 
 Where:
 
-- decoded: if you want it decoded or not
+- decoded: (true or false) if you want it decoded or not
 
 ### Special thanks to:
 
