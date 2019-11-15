@@ -1,4 +1,4 @@
-# :zap: I.A.B. :zap: *I*PFS *A*rweave *B*ridge 
+# :zap: I.A.B. :zap: **I**PFS **A**rweave **B**ridge 
 
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AndreiD/arweave-ipfs-bridge/blob/master/LICENSE)
 
@@ -98,7 +98,7 @@ Where:
 
 - duration gives you the time it took to get it from IPFS and to upload it to Arweave
 - id represents the arweave transaction id
-- *Attention* The transaction ID is not mined yet. You can get the status of a transaction by calling the API below
+- **Attention** The transaction ID is NOT mined yet. You can get the status of a transaction by calling the API below
 
    
 #### :point_right: Retrive a transaction or check if it's pending
