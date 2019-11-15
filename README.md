@@ -64,6 +64,7 @@ Where:
    
 used to check if the service is alive
 
+output:
 ~~~~
 pong
 ~~~~
@@ -71,8 +72,9 @@ pong
 #### :point_right: Check your AR Token balance
 ##### GET /api/balance
 
-return your balance of AR Tokens
+returns your balance of AR Tokens
 
+output:
 ~~~~
 {
     "ar": "0.9996836928",
@@ -85,6 +87,7 @@ return your balance of AR Tokens
 
 > example: /api/transfer?hash=QmUNXr47Bja3aHUMfhXX5mMWTFJKuoUGETcA48vHG7dhag
 
+output:
 ~~~~
 {
     "duration": "953.239662ms",
@@ -104,6 +107,7 @@ Where:
 
 > example: /api/check_tx_arweave?transaction_id=bnRQhVkook_lPv8uxuDRcj-wC5R2nfVps-2qA6-81WU
 
+output:
 ~~~~
 the transaction details or it's status (ex: pending)
 ~~~~
@@ -117,6 +121,7 @@ the transaction details or it's status (ex: pending)
 
 > example: /api/ipfs?hash=QmbRmU9vYwH9Hhn1eH1WEFVS9sugpGSdJrfqtuZ329EgZA
 
+output:
 ~~~~
 content of the file from IPFS
 ~~~~
@@ -127,6 +132,7 @@ content of the file from IPFS
 
 > example: /api/arweave?transaction_id=GyrTvuUBK9AgVLGBA8SsOHkUYmWApNqvJtMjJZZIvbQ&decode=true
 
+output:
 ~~~~
 content of the file from Arweave
 ~~~~
