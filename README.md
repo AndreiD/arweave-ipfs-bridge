@@ -4,14 +4,14 @@
 
 A bridge to connect IPFS to Arweave
 
-### Features:
+### Features
 
 - only 3 GET requests
 - you easily split it into multiple services
 - load balance it, use multiple wallets not just one
 - easy to integrated with almost anything
 
-### How to use it ?
+### How to use it
 
 Tested on ubuntu 19.04
 
@@ -19,7 +19,14 @@ Tested on ubuntu 19.04
 - start hooverd and connect it to a wallet
 - get the binary file ***iab***
 - copy the configuration.json file in the same directory (modify it to your liking)
-- run ./aib **defaults on 0.0.0.0:5555**
+- run ./iab **defaults on 0.0.0.0:5555**
+
+### Build it
+
+if you want to build it you need go >= 1.12
+in the root directory run: go build -o YOUR_BINARY_NAME
+for installing go check: https://golang.org/doc/install
+it should run without problems also on macOS & Windows
 
 ### Configuration file
 
