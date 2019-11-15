@@ -6,10 +6,10 @@ A bridge to connect IPFS to Arweave
 
 ### Features
 
-- only 3 GET requests
+- only couple of requests
 - you easily split it into multiple services
 - load balance it, use multiple wallets not just one
-- easy to integrated with almost anything
+- easy to integrated with almost anything (logging, monitoring etc.)
 
 ### How to use it
 
@@ -33,7 +33,7 @@ go build -o YOUR_BINARY_NAME
 for installing go check: https://golang.org/doc/install
 it should run without problems also on macOS & Windows
 
-### Configuration file
+#### Configuration file
 
 ~~~~
 {
@@ -50,12 +50,11 @@ it should run without problems also on macOS & Windows
 
 Where:
 
-- debug: runs with more verbosity
-- nodeURL: how to connect to arweave ?
-- walletFile: the json AR wallet file
-- cleanup: deletes the files after they get retrived
+- debug: runs with much more verbosity
+- nodeURL: how to connect to arweave
+- walletFile: the json AR wallet file location
+- cleanup: deletes the files after they get retried
 - server host/port: how to run this service
-
 
 ## API Endpoints
 
