@@ -50,11 +50,11 @@ it should run without problems also on macOS & Windows
 
 Where:
 
-- debug: runs with much more verbosity
-- nodeURL: how to connect to arweave
-- walletFile: the json AR wallet file location
-- cleanup: deletes the files after they get retried
-- server host/port: how to run this service
+- **debug** runs with much more verbosity
+- **nodeURL** how to connect to arweave
+- **walletFile** the json AR wallet file location
+- **cleanup** deletes the files after they get retried
+- **server's ip/port**: how to run this API service
 
 ## API Endpoints
 
@@ -96,9 +96,9 @@ output:
 
 Where:
 
-- duration gives you the time it took to get it from IPFS and to upload it to Arweave
-- id represents the arweave transaction id
-- **Attention** The transaction ID is NOT mined yet. You can get the status of a transaction by calling the API below
+- **duration** gives you the time it took to get it from IPFS and to upload it to Arweave
+- **id** represents the arweave transaction id
+- **Attention** The transaction is NOT mined yet. You can get the status of a transaction by calling the API below
 
    
 #### :point_right: Retrive a transaction or check if it's pending
@@ -138,7 +138,7 @@ content of the file from Arweave
 
 Where:
 
-- decoded: (true or false) if you want it decoded or not
+- **decoded** (true or false) if you want it decoded or not
 
 ### Special thanks to:
 
