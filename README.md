@@ -24,7 +24,12 @@ Tested on ubuntu 19.04
 ### Build it
 
 if you want to build it you need go >= 1.12
-in the root directory run: go build -o YOUR_BINARY_NAME
+in the root directory run: 
+
+~~~~
+go build -o YOUR_BINARY_NAME
+~~~~
+
 for installing go check: https://golang.org/doc/install
 it should run without problems also on macOS & Windows
 
