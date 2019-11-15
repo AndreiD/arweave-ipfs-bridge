@@ -147,6 +147,14 @@ https://github.com/Dev43/arweave-go -> for the transaction signing & transmittin
 
 fell free to create an issue
 
+### TODO://
+
+- [ ] docker
+- [ ] golang-ci yml
+- [ ] encryption
+- [ ] zipping
+
+
 ## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details.
