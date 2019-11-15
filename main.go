@@ -1,6 +1,7 @@
 package main
 
 import (
+	"aif/arweave"
 	"aif/configs"
 	"aif/utils/log"
 	"context"
@@ -19,7 +20,7 @@ const version = "1.0 Alpha"
 var router *gin.Engine
 
 // Configuration .
-var Configuration *configs.ViperConfiguration
+var Configuration *configs.ViperConfiguration //TODO: no need to export it ?
 
 func init() {
 
@@ -71,6 +72,8 @@ func main() {
 	}()
 
 	log.Printf("Running on %s:%s", Configuration.Get("server.host"), strconv.Itoa(Configuration.GetInt("server.port")))
+
+	arweave.Initialize(Configuration)
 
 	// Wait for interrupt signal to gracefully shutdown the server with
 	// a timeout of 5 seconds.

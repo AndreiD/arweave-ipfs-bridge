@@ -3,6 +3,7 @@ module aif
 go 1.12
 
 require (
+	github.com/Dev43/arweave-go v0.0.2
 	github.com/gin-gonic/gin v1.4.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/sirupsen/logrus v1.2.0

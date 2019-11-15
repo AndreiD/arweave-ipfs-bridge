@@ -1,9 +1,9 @@
 package handlers
 
 import (
+	"aif/arweave"
 	"aif/configs"
 	"aif/utils/log"
-	"bytes"
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -19,7 +19,7 @@ import (
 // TransferIPFSToArweave .
 func TransferIPFSToArweave(c *gin.Context) {
 
-	start := time.Now()
+	//start := time.Now()
 	ipfsHash := c.Query("hash")
 	if ipfsHash == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "please provide the ipfs hash in the query ex: ?hash=Qmc5gCcjYypU7y28oCALwfSvxCBskLuPKWpK4qpterKC7z"})
@@ -56,35 +56,44 @@ func TransferIPFSToArweave(c *gin.Context) {
 	log.Println("file retrieved successfully from IPFS")
 
 	// uploading it to arweave
-	payload := []byte("@" + ipfsHash)
-	out, err = postToArweave("http://localhost:1908/raw", ipfsHash, bytes.NewBuffer(payload))
+
+	output, err := arweave.Transfer(ipfsHash, configuration)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	log.Printf("got output from hooverd %s", string(out))
+	log.Printf("%v", output)
 
-	if !strings.Contains(string(out), "response: 200") {
-		c.JSON(http.StatusBadRequest, gin.H{"error": parseArweaveError(string(out))})
-		return
-	}
-
-	if len(string(out)) < 56 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": string(out)})
-		return
-	}
-
-	hashArweave := string(out)[12:55]
-
-	log.Println("transfer finished successfully")
-
-	err = cleanup(configuration, ipfsHash)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "transfer completed but I couldn't cleanup the file " + err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"output": string(out), "hash": hashArweave, "duration": fmt.Sprintf("%s", time.Since(start))})
+	//payload := []byte("@" + ipfsHash)
+	//out, err = postToArweave("http://localhost:1908/raw", ipfsHash, bytes.NewBuffer(payload))
+	//if err != nil {
+	//	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	//	return
+	//}
+	//log.Printf("got output from hooverd %s", string(out))
+	//
+	//if !strings.Contains(string(out), "response: 200") {
+	//	c.JSON(http.StatusBadRequest, gin.H{"error": parseArweaveError(string(out))})
+	//	return
+	//}
+	//
+	//if len(string(out)) < 56 {
+	//	c.JSON(http.StatusBadRequest, gin.H{"error": string(out)})
+	//	return
+	//}
+	//
+	//hashArweave := string(out)[12:55]
+	//
+	//log.Println("transfer finished successfully")
+	//
+	//err = cleanup(configuration, ipfsHash)
+	//if err != nil {
+	//	c.JSON(http.StatusBadRequest, gin.H{"error": "transfer completed but I couldn't cleanup the file " + err.Error()})
+	//	return
+	//}
+	//
+	//c.JSON(http.StatusOK, gin.H{"output": string(out), "hash": hashArweave, "duration": fmt.Sprintf("%s", time.Since(start))})
+	c.Status(200)
 }
 
 func cleanup(configuration *configs.ViperConfiguration, ipfsHash string) error {
@@ -104,7 +113,7 @@ func parseArweaveError(payload string) string {
 		return "transaction has already been submitted"
 	}
 	if strings.Contains(payload, "400") {
-		return "the transaction is invalid, couldn't be verified, or the wallet does not have suffucuent funds"
+		return "the transaction is invalid, couldn't be verified, or the arweave does not have suffucuent funds"
 	}
 	if strings.Contains(payload, "429") {
 		return "the request has exceeded the clients rate limit quota"

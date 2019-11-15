@@ -17,7 +17,7 @@ Tested on ubuntu 19.04
 - start hooverd and connect it to a wallet
 - get the binary file aib
 - copy the configuration.json file in the same directory (modify it to your liking)
-- run ./aib **defaults on 0.0.0.0:5555/api**
+- run ./aib **defaults on 0.0.0.0:5555**
 
 
 ## API Endpoints
