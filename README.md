@@ -155,9 +155,29 @@ fell free to create an issue
 - [ ] zipping
 
 
-## Contributing
+// without compression: TIGLEi0r85E1SDwsyXiU9YgnnOdvdd8VKcn03zI3Jo4
+// with compression: Pz_VcgcS6hC3xWDsbqBXzeXlwTxqGtYLvA75lonNbHs
+## Project Values
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+This project has a few principle-based goals that guide its development:
+
+- **Limit dependencies.** Keep the package lightweight.
+
+- **Pure Go.** This means no cgo or other external/system dependencies. This package should be able to stand on its own and cross-compile easily to any platform -- and that includes its library dependencies.
+
+- **Idiomatic Go.** Keep interfaces small, variable names semantic, vet shows no errors, the linter (golangci lint) is generally quiet, etc.
+
+- **Well-documented.** Use comments prudently; explain why non-obvious code is necessary (and use tests to enforce it). Keep the docs updated, and have examples where helpful.
+
+- **Keep it efficient.** This often means keep it simple. Fast code is valuable.
+
+- **Consensus.** Contributions should ideally be approved by multiple reviewers before being merged. Generally, avoid merging multi-chunk changes that do not go through at least one or two iterations/reviews. Except for trivial changes, PRs are seldom ready to merge right away.
+
+- **Have fun contributing.** Coding is awesome!
+
+I welcome contributions and appreciate your efforts! However, please open issues to discuss any changes before spending the time preparing a pull request. 
+This will save time, reduce frustration, and help coordinate the work. Thank you!
+
 
 
 

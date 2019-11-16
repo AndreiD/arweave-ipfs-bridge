@@ -5,6 +5,7 @@ import (
 	"aif/configs"
 	"aif/utils"
 	"aif/utils/log"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"os"
@@ -20,6 +21,12 @@ func TransferIPFSToArweave(c *gin.Context) {
 	ipfsHash := c.Query("hash")
 	if ipfsHash == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "please provide the IPFS hash in the query ex: ?hash=Qmc5gCcjYypU7y28oCALwfSvxCBskLuPKWpK4qpterKC7z"})
+		return
+	}
+
+	useCompression := c.Query("use_compression")
+	if useCompression == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "please provide the use_compression parameter in the query ex: ?use_compression=true"})
 		return
 	}
 
@@ -52,14 +59,14 @@ func TransferIPFSToArweave(c *gin.Context) {
 
 	log.Println("file retrieved successfully from IPFS")
 
-	// uploading it to arweave
-	txID, err := arweave.Transfer(ipfsHash, ipfsHash, configuration)
+	// uploading it to Arweave
+	txID, payloadLen, err := arweave.Transfer(ipfsHash, useCompression, ipfsHash, configuration)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	log.Println("transfer finished successfully")
+	log.Println("Transfer to Arweave finished successfully. Tx ID %s", txID)
 
 	err = cleanup(configuration, ipfsHash)
 	if err != nil {
@@ -67,16 +74,25 @@ func TransferIPFSToArweave(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"id": txID, "duration": string(time.Since(start))})
+	err = cleanup(configuration, ipfsHash+".zip")
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "transfer completed but I couldn't cleanup the file " + err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"id": txID, "payload_bytes": payloadLen, "duration": fmt.Sprintf("%s", time.Since(start))})
 }
 
-func cleanup(configuration *configs.ViperConfiguration, ipfsHash string) error {
+// deletes a file if the configuration is set to cleanup = true
+func cleanup(configuration *configs.ViperConfiguration, filename string) error {
 	if configuration.GetBool("cleanup") {
-		err := os.Remove(ipfsHash)
-		if err != nil {
-			return err
+		if utils.CheckFileExists(filename) {
+			err := os.Remove(filename)
+			if err != nil {
+				return err
+			}
+			log.Println("cleanup: file deleted")
 		}
-		log.Println("cleanup: file deleted")
 	}
 	return nil
 }

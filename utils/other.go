@@ -1,13 +1,14 @@
 package utils
 
 import (
+	"aif/utils/log"
 	"context"
 	"encoding/base64"
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 )
@@ -19,8 +20,6 @@ func Close(c io.Closer) {
 		log.Fatal(err)
 	}
 }
-
-
 
 // GetRequest executes a generic GET request
 func GetRequest(url string) ([]byte, int, error) {
@@ -72,4 +71,17 @@ func CheckValidityArweaveTxID(id string) error {
 		return fmt.Errorf("this doesn't look like a transaction id from arweave. length is not 43")
 	}
 	return nil
+}
+
+// CheckFileExists - check if file exists
+func CheckFileExists(filename string) bool {
+	_, err := os.Stat(filename)
+	if err == nil {
+		return true
+	} else if os.IsNotExist(err) {
+		return false
+	} else {
+		log.Error("can't verify if %s exists or not", filename)
+		return false
+	}
 }
