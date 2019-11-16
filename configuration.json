@@ -5,7 +5,7 @@
   "walletFile": "/home/me/Documents/keys/arweave-wallet.json",
   "cleanup": true,
   "server": {
-    "host": "0.0.0.0",
+    "host": "localhost",
     "port": 5555
   }
 }

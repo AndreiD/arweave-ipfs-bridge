@@ -21,6 +21,15 @@ Tested on ubuntu 19.04
 - Copy the configuration.json file in the same directory (modify it to your liking)
 - run ./iab **defaults on 0.0.0.0:5555**
 
+### Docker
+
+checkout the Dockerfile
+
+~~~~
+docker build -t iab:1.0 .
+docker run -p 5555:5555 iab:1.0
+~~~~
+
 ### Build it
 
 if you want to build it you need go >= 1.12
@@ -165,7 +174,7 @@ fell free to create an issue
 ### TODO://
 
 - [x] compression
-- [ ] docker
+- [x] docker
 - [ ] golang-ci yml
 - [ ] encryption
 
