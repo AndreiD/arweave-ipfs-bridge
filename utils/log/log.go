@@ -13,10 +13,8 @@ func Init(debug bool) {
 	if debug {
 		logger.SetLevel(logrus.InfoLevel)
 		return
-	} else {
-		logger.SetLevel(logrus.WarnLevel)
 	}
-
+	logger.SetLevel(logrus.WarnLevel)
 }
 
 // Event stores messages to log later, from our standard interface
@@ -30,7 +28,7 @@ type StandardLogger struct {
 	*logrus.Logger
 }
 
-// NewLogger initializes the standard logger
+// NewLogger initialises the standard logger
 func NewLogger() *StandardLogger {
 	var baseLogger = logrus.New()
 

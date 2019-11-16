@@ -23,6 +23,7 @@ func Dial(url string) (*Client, error) {
 	return &Client{client: new(http.Client), url: url}, nil
 }
 
+// TxAnchor .
 func (c *Client) TxAnchor(ctx context.Context) (string, error) {
 	body, err := c.get(ctx, "tx_anchor")
 	if err != nil {

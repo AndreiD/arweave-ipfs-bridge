@@ -149,10 +149,11 @@ fell free to create an issue
 
 ### TODO://
 
+- [x] compression
 - [ ] docker
 - [ ] golang-ci yml
 - [ ] encryption
-- [ ] zipping
+
 
 
 // without compression: TIGLEi0r85E1SDwsyXiU9YgnnOdvdd8VKcn03zI3Jo4

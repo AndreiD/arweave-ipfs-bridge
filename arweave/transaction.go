@@ -42,7 +42,7 @@ func (t *Transaction) Hash() string {
 
 // Tags returns the tags of the transaction in plain text
 func (t *Transaction) Tags() ([]Tag, error) {
-	var tags []Tag
+	tags := []Tag{}
 	for _, tag := range t.tags {
 		// access name
 		tagName, err := utils.DecodeString(tag.Name)
@@ -73,6 +73,7 @@ func (t *Transaction) AddTag(name string, value string) error {
 	return nil
 }
 
+// SetID .
 func (t *Transaction) SetID(id []byte) {
 	t.id = id
 }

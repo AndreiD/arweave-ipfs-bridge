@@ -81,7 +81,7 @@ func CheckFileExists(filename string) bool {
 	} else if os.IsNotExist(err) {
 		return false
 	} else {
-		log.Error("can't verify if %s exists or not", filename)
+		log.Errorf("can't verify if %s exists or not", filename)
 		return false
 	}
 }

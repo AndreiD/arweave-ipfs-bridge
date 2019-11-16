@@ -35,7 +35,7 @@ func NewTransactor(nodeURL string) (*Transactor, error) {
 }
 
 // CreateTransaction creates a brand new transaction
-func (tr *Transactor) CreateTransaction(ipfsHash string, ctx context.Context, w WalletSigner, amount string, data []byte, target string) (*Transaction, error) {
+func (tr *Transactor) CreateTransaction(ctx context.Context, ipfsHash string, w WalletSigner, amount string, data []byte, target string) (*Transaction, error) {
 	lastTx, err := tr.Client.TxAnchor(ctx)
 	if err != nil {
 		return nil, err
@@ -66,9 +66,9 @@ func (tr *Transactor) SendTransaction(ctx context.Context, tx *Transaction) (str
 	if len(tx.Signature()) == 0 {
 		return "", errors.New("transaction is missing signature")
 	}
-	serialized, err := json.Marshal(tx)
+	serialised, err := json.Marshal(tx)
 	if err != nil {
 		return "", err
 	}
-	return tr.Client.Commit(ctx, serialized)
+	return tr.Client.Commit(ctx, serialised)
 }

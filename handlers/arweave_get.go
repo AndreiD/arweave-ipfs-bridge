@@ -74,9 +74,9 @@ func GetFromArweave(c *gin.Context) {
 		}
 
 		defer func() {
-			err := cleanup(configuration, txID+".zip")
-			if err != nil {
-				log.Error(err)
+			err1 := cleanup(configuration, txID+".zip")
+			if err1 != nil {
+				log.Error(err1)
 			}
 		}()
 

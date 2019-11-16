@@ -54,7 +54,7 @@ func (vc *ViperConfiguration) Init() {
 	pflag.Parse()
 	err := viper.BindPFlags(pflag.CommandLine)
 	if err != nil {
-		log.Fatalf("an error occured while running viper.BindPFlags(): %+v\n", err)
+		log.Fatalf("an error occurred while running viper.BindPFlags(): %+v\n", err)
 	}
 }
 
@@ -68,7 +68,7 @@ func (vc *ViperConfiguration) Get(param string) string {
 	return viper.GetString(param)
 }
 
-// Get .
+// GetInterface .
 func (vc *ViperConfiguration) GetInterface(param string) interface{} {
 	return viper.Get(param)
 }

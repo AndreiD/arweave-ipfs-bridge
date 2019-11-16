@@ -39,6 +39,9 @@ func UnarchiveIt(filenameWithExtention string, targetFolder string) (string, err
 		}
 		return nil
 	})
+	if err != nil {
+		return "", err
+	}
 
 	return archivedFilename, nil
 }

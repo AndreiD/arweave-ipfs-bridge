@@ -60,7 +60,7 @@ func Transfer(ipfsHash string, useCompression string, fileName string, configura
 
 	log.Printf("creating a transaction with a payload of %d bytes", buf.Len())
 
-	txBuilder, err := ar.CreateTransaction(ipfsHash, context.Background(), arWallet, "0", buf.Bytes(), "")
+	txBuilder, err := ar.CreateTransaction(context.Background(), ipfsHash, arWallet, "0", buf.Bytes(), "")
 	if err != nil {
 		return "", -1, err
 	}

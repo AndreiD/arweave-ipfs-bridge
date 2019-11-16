@@ -66,7 +66,7 @@ func TransferIPFSToArweave(c *gin.Context) {
 		return
 	}
 
-	log.Println("Transfer to Arweave finished successfully. Tx ID %s", txID)
+	log.Printf("Transfer to Arweave finished successfully. Tx ID %s", txID)
 
 	err = cleanup(configuration, ipfsHash)
 	if err != nil {
