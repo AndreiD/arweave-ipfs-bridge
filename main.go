@@ -9,7 +9,6 @@ import (
 	uuid "github.com/satori/go.uuid"
 	"net/http"
 	"os"
-	"os/exec"
 	"os/signal"
 	"strconv"
 	"time"
@@ -34,12 +33,6 @@ func init() {
 	log.Println("Starting IPFS - Arweave Bridge version: " + version)
 	log.Println("==================================================")
 	log.Println()
-
-	// check if IPFS daemon is running
-	out, err := exec.Command("ipfs", "swarm", "peers").CombinedOutput()
-	if err != nil {
-		log.Fatalf("please check if IPFS daemon is running. Error %s", string(out))
-	}
 }
 
 func main() {

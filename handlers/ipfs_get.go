@@ -5,10 +5,7 @@ import (
 	"aif/utils"
 	"aif/utils/log"
 	"github.com/gin-gonic/gin"
-	"io/ioutil"
 	"net/http"
-	"os/exec"
-	"strings"
 	"time"
 )
 
@@ -34,31 +31,14 @@ func GetFromIPFS(c *gin.Context) {
 		return
 	}
 
-	out, err := exec.Command("ipfs", "get", hash).CombinedOutput()
+	out, statusCode, err := utils.GetRequest(configuration.Get("ipfsGateway") + hash)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	log.Printf("output from IPFS cmd %s", string(out))
-
-	if strings.Contains(string(out), "merkledag: not found") {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "file not found."})
-		return
-	}
-
-	content, err := ioutil.ReadFile(hash)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "file not found."})
-		return
-	}
-
-	// cleanup
-	err = cleanup(configuration, hash)
-	if err != nil {
-		log.Error(err)
-	}
+	log.Printf("IPFS gateway returned status code %d", statusCode)
 
 	log.Printf("done in %s", time.Since(start))
-	c.String(http.StatusOK, string(content))
+	c.String(http.StatusOK, string(out))
 }

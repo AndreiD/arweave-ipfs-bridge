@@ -10,6 +10,7 @@ A bridge to connect IPFS to Arweave
 - you easily split it into multiple services
 - load balance it, use multiple wallets not just one
 - easy to integrated with almost anything (logging, monitoring etc.)
+- no ipfs running in the background needed, no hooverd needed
 
 ### How to use it
 
@@ -38,6 +39,7 @@ it should build & run without problems on macOS & Windows
 {
   "debug": true,
   "nodeURL": "https://arweave.net",
+  "ipfsGateway": "https://ipfs.infura.io/ipfs/",
   "walletFile": "/path_to_your_wallet/arweave-wallet.json",
   "cleanup": true,
   "server": {
@@ -51,9 +53,22 @@ Where:
 
 - **debug** runs with much more verbosity
 - **nodeURL** how to connect to arweave
+- **ipfsGateway** - your IPFS gateway. See below
 - **walletFile** the json AR wallet file location
 - **cleanup** deletes the files after they get retried
 - **server's ip/port**: how to run this API service
+
+about IPFS gateway:
+
+choices: 
+- https://ipfs.infura.io/ipfs/ (I find this the most reliable)
+- https://cloudflare-ipfs.com/ipfs/ (good one)
+- https://ipfs.io/ipfs/ (a little bit slow)
+
+What if you want to host your own gateway ?
+
+make sure you crete an api that will just accept a ipfs hash after the "/"
+
 
 ## API Endpoints
 

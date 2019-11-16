@@ -9,8 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"os"
-	"os/exec"
-	"strings"
 	"time"
 )
 
@@ -45,17 +43,26 @@ func TransferIPFSToArweave(c *gin.Context) {
 	log.Printf("starting retrieving from IPFS %s", ipfsHash)
 
 	// get from IPFS
-	out, err := exec.Command("ipfs", "get", ipfsHash).CombinedOutput()
-	log.Printf("Output from ipfs cmd %s", string(out))
-	if strings.Contains(string(out), "merkledag: not found") {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "file not found."})
-		return
-	}
-
+	out, statusCode, err := utils.GetRequest(configuration.Get("ipfsGateway") + ipfsHash)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	log.Printf("IPFS gateway returned status code %d", statusCode)
+
+	// saving it to the filesystem
+	f, err := os.Create(ipfsHash)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	_, err = f.Write(out)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	utils.Close(f)
 
 	log.Println("file retrieved successfully from IPFS")
 
