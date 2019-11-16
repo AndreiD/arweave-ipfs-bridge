@@ -175,9 +175,9 @@ fell free to create an issue
 
 - [x] compression
 - [x] docker
-- [ ] golang-ci yml
+- [x] golang-ci yml
 - [ ] encryption
-
+- [ ] awaiting your idea
 
 
 // without compression: TIGLEi0r85E1SDwsyXiU9YgnnOdvdd8VKcn03zI3Jo4
