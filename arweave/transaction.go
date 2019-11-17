@@ -2,6 +2,7 @@ package arweave
 
 import (
 	"aif/utils"
+	"aif/utils/log"
 	"crypto/sha256"
 	"encoding/json"
 	"math/big"
@@ -11,18 +12,20 @@ import (
 
 // NewTransaction creates a brand new transaction struct
 func NewTransaction(ipfsHash string, lastTx string, owner *big.Int, quantity string, target string, data []byte, reward string) *Transaction {
-	return &Transaction{
+	tx := Transaction{
 		lastTx:   lastTx,
 		owner:    owner,
 		quantity: quantity,
 		target:   target,
 		data:     data,
 		reward:   reward,
-		tags: []Tag{{
-			Name:  "IPFS-Add",
-			Value: ipfsHash,
-		}},
+		tags:     nil,
 	}
+	err := tx.AddTag("IPFS-Add", ipfsHash)
+	if err != nil {
+		log.Error(err)
+	}
+	return &tx
 }
 
 // LastTx returns the last transaction of the account
