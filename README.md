@@ -176,7 +176,6 @@ fell free to create an issue
 - [x] compression
 - [x] docker
 - [x] golang-ci yml
-- [ ] encryption
 - [ ] awaiting your idea
 
 
