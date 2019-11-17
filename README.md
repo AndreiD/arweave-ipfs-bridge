@@ -70,9 +70,10 @@ Where:
 about IPFS gateway:
 
 choices: 
-- https://ipfs.infura.io/ipfs/ (I find this the most reliable)
-- https://cloudflare-ipfs.com/ipfs/ (good one)
-- https://ipfs.io/ipfs/ (a little bit slow)
+- http://127.0.0.1:8080/ipfs/
+- https://ipfs.infura.io/ipfs/
+- https://cloudflare-ipfs.com/ipfs/
+- https://ipfs.io/ipfs/
 
 What if you want to host your own gateway ?
 
@@ -176,6 +177,7 @@ fell free to create an issue
 - [x] compression
 - [x] docker
 - [x] golang-ci yml
+- [] tags !
 - [ ] awaiting your idea
 
 
