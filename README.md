@@ -15,10 +15,11 @@ A bridge to connect IPFS to Arweave
 
 Tested on ubuntu 19.04
 
-- Start and configure ipfs to your liking
+- Choose an IPFS gateway to your liking (or create one yourself)
 - If you use Ubuntu, get the binary file **iab**, if not you'll have to build/run it
 - Copy the configuration.json file in the same directory (modify it to your liking)
-- run ./iab **defaults on 0.0.0.0:5555**
+- run ./iab  
+- API is live on **http://localhost:5555**
 
 * If you want to use it on other platforms, either use the Dockerfile or build it yourself
 
@@ -162,7 +163,7 @@ content of the file from IPFS
 
 ##### GET /api/arweave?transaction_id=TRANSACTION_ID&decode=true
 
-> example: /api/arweave?transaction_id=GyrTvuUBK9AgVLGBA8SsOHkUYmWApNqvJtMjJZZIvbQ&decode=BOOLEAN&extract=BOOLEAN
+> example: /api/arweave?transaction_id=GyrTvuUBK9AgVLGBA8SsOHkUYmWApNqvJtMjJZZIvbQ&decode=BOOLEAN&extract=true
 
 output:
 ~~~~
@@ -187,7 +188,6 @@ fell free to create an issue
 - [x] compression
 - [x] docker
 - [x] golang-ci yml
-- [x] tags !
 - [ ] awaiting your idea
 
 
