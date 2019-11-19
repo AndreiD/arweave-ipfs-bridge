@@ -67,7 +67,7 @@ Where:
 - **nodeURL** how to connect to arweave
 - **ipfsGateway** - your IPFS gateway. See below
 - **walletFile** the json AR wallet file location
-- **cleanup** deletes the files after they get retrieved
+- **cleanup** deletes the files after they get retrieved. use false if you want to debug things
 - **server's ip/port**: how to run this API service
 
 about IPFS gateway:
