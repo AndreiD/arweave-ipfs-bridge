@@ -5,6 +5,7 @@
 A bridge to connect IPFS to Arweave
 
 <p align="center">
+  <p align="center">Click on the image to enlarge it</p>
    <img alt="how it looks" height="500" src="https://raw.githubusercontent.com/AndreiD/arweave-ipfs-bridge/master/assets/postman_example.png">
  </p>
 
