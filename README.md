@@ -213,8 +213,6 @@ I welcome contributions and appreciate your efforts! However, please open issues
 This will save time, reduce frustration, and help coordinate the work. Thank you!
 
 
-
-
 ## License
 
-AIB is released under the MIT license.
+IPFS Arweave Bridge is released under the MIT license.
