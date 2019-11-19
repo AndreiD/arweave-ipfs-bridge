@@ -123,6 +123,12 @@ output:
 
 Where:
 
+query parameters:
+- **hash** the IPFS hash
+- **use_compression** if you want the file compressed before sending it to arweave. (zip is used)
+
+
+response:
 - **duration** gives you the time it took to get it from IPFS and to upload it to Arweave
 - **id** represents the arweave transaction id
 - **Attention** The transaction is NOT mined yet. You can get the status of a transaction by calling the API below
