@@ -12,18 +12,18 @@ import (
 // original from: https://github.com/Dev43/arweave-go
 
 // Transfer on arweave blockchain. Returns transaction hash, error
-func Transfer(ipfsHash string, useCompression string, fileName string, configuration *configs.ViperConfiguration) (string, int, error) {
+func Transfer(ipfsHash string, useCompression bool, tags []Tag, configuration *configs.ViperConfiguration) (string, int, error) {
 
 	buf := new(bytes.Buffer)
 
-	if useCompression == "true" {
+	if useCompression {
 		log.Println("compression is activated")
-		err := utils.ArchiveFile(fileName)
+		err := utils.ArchiveFile(ipfsHash)
 		if err != nil {
 			return "", -1, err
 		}
 
-		f, err := os.Open(fileName + ".zip")
+		f, err := os.Open(ipfsHash + ".zip")
 		if err != nil {
 			return "", -1, err
 		}
@@ -35,7 +35,7 @@ func Transfer(ipfsHash string, useCompression string, fileName string, configura
 
 	} else {
 		log.Warn("for files bigger than 200 bytes, please consider using compression")
-		f, err := os.Open(fileName)
+		f, err := os.Open(ipfsHash)
 		if err != nil {
 			return "", -1, err
 		}
@@ -60,7 +60,7 @@ func Transfer(ipfsHash string, useCompression string, fileName string, configura
 
 	log.Printf("creating a transaction with a payload of %d bytes", buf.Len())
 
-	txBuilder, err := ar.CreateTransaction(context.Background(), ipfsHash, arWallet, "0", buf.Bytes(), "")
+	txBuilder, err := ar.CreateTransaction(context.Background(), ipfsHash, tags, arWallet, "0", buf.Bytes(), "")
 	if err != nil {
 		return "", -1, err
 	}

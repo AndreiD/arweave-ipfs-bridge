@@ -3,6 +3,7 @@ module aif
 go 1.12
 
 require (
+	github.com/davecgh/go-spew v1.1.1
 	github.com/gin-gonic/gin v1.4.0
 	github.com/mendsley/gojwk v0.0.0-20141217222730-4d5ec6e58103
 	github.com/mholt/archiver/v3 v3.3.0

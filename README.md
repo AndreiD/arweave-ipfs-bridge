@@ -23,6 +23,77 @@ Tested on ubuntu 19.04
 
 * If you want to use it on other platforms, either use the Dockerfile or build it yourself
 
+### How it does the transfer
+
+##### POST /api/transfer
+
+> example: /api/transfer
+
+
+output:
+~~~~
+{
+    "duration": "1.145424997s",
+    "id": "Qq2IE63kxOaZp7laJapQqyu1PUPPktGoSSyKTLI9iP4",
+    "payload_bytes": 14
+}
+~~~~
+
+POST a raw json body containing
+
+{
+    "ipfs_hash": "THE_IPFS_HASH",
+    "use_compression": BOOLEAN,
+    "tags": [
+        {
+            "key": "key1",
+            "value": "value1"
+        },...
+    ]
+}
+
+Where: 
+- **hash** the IPFS hash
+- **use_compression** if you want the file compressed before sending it to arweave. (zip is used)
+- **tags** (optional) if you want to add your own tags. (Note: the IPFS-Add tag is added automatically)
+
+
+example:
+~~~~
+{
+    "ipfs_hash": "Qmc5gCcjYypU7y28oCALwfSvxCBskLuPKWpK4qpterKC7z",
+    "use_compression": false,
+    "tags": [
+        {
+            "key": "key1",
+            "value": "value1"
+        },
+        {
+            "key": "key2",
+            "value": "value2"
+        }
+    ]
+}
+~~~~
+
+response:
+- **duration** gives you the time it took to get it from IPFS and to upload it to Arweave
+- **id** represents the arweave transaction id
+- **Attention** The transaction is NOT mined yet. You can get the status of a transaction by calling the API below
+
+(it's up to the user how often they pool for the transaction status)
+
+Response:
+
+~~~~
+{
+    "duration": "1.145424997s",
+    "id": "Qq2IE63kxOaZp7laJapQqyu1PUPPktGoSSyKTLI9iP4",
+    "payload_bytes": 14
+}
+~~~~
+
+
 ### Docker
 
 checkout the Dockerfile
@@ -108,31 +179,7 @@ output:
 }
 ~~~~
    
-#### :point_right: Transfer from IPFS to Arweave
-##### GET /api/transfer?hash=IPFS_HASH_HERE&use_compression=BOOLEAN
 
-> example: /api/transfer?hash=QmUNXr47Bja3aHUMfhXX5mMWTFJKuoUGETcA48vHG7dhag&use_compression=true
-
-
-output:
-~~~~
-{
-    "duration": "953.239662ms",
-    "id": "g9e6nzaiz74-RTCiXJwmOvQLtExT-wlx5oiC4ybqTtQ"
-}
-~~~~
-
-Where:
-
-query parameters:
-- **hash** the IPFS hash
-- **use_compression** if you want the file compressed before sending it to arweave. (zip is used)
-
-
-response:
-- **duration** gives you the time it took to get it from IPFS and to upload it to Arweave
-- **id** represents the arweave transaction id
-- **Attention** The transaction is NOT mined yet. You can get the status of a transaction by calling the API below
 
    
 #### :point_right: Retrive a transaction or check if it's pending

@@ -35,7 +35,7 @@ func NewTransactor(nodeURL string) (*Transactor, error) {
 }
 
 // CreateTransaction creates a brand new transaction
-func (tr *Transactor) CreateTransaction(ctx context.Context, ipfsHash string, w WalletSigner, amount string, data []byte, target string) (*Transaction, error) {
+func (tr *Transactor) CreateTransaction(ctx context.Context, ipfsHash string, tags []Tag, w WalletSigner, amount string, data []byte, target string) (*Transaction, error) {
 	lastTx, err := tr.Client.TxAnchor(ctx)
 	if err != nil {
 		return nil, err
@@ -48,6 +48,7 @@ func (tr *Transactor) CreateTransaction(ctx context.Context, ipfsHash string, w 
 
 	// Non encoded transaction fields
 	tx := NewTransaction(
+		tags,
 		ipfsHash,
 		lastTx,
 		w.PubKeyModulus(),

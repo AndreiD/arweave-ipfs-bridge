@@ -11,7 +11,7 @@ import (
 // original from: https://github.com/Dev43/arweave-go
 
 // NewTransaction creates a brand new transaction struct
-func NewTransaction(ipfsHash string, lastTx string, owner *big.Int, quantity string, target string, data []byte, reward string) *Transaction {
+func NewTransaction(tags []Tag, ipfsHash string, lastTx string, owner *big.Int, quantity string, target string, data []byte, reward string) *Transaction {
 	tx := Transaction{
 		lastTx:   lastTx,
 		owner:    owner,
@@ -25,6 +25,15 @@ func NewTransaction(ipfsHash string, lastTx string, owner *big.Int, quantity str
 	if err != nil {
 		log.Error(err)
 	}
+
+	// add optional tags
+	for _, tag := range tags {
+		err := tx.AddTag(tag.Name, tag.Value)
+		if err != nil {
+			log.Error(err)
+		}
+	}
+
 	return &tx
 }
 

@@ -16,19 +16,28 @@ import (
 func TransferIPFSToArweave(c *gin.Context) {
 
 	start := time.Now()
-	ipfsHash := c.Query("hash")
-	if ipfsHash == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "please provide the IPFS hash in the query ex: ?hash=Qmc5gCcjYypU7y28oCALwfSvxCBskLuPKWpK4qpterKC7z"})
+
+	type tags struct {
+		Key   string `json:"key"`
+		Value string `json:"value"`
+	}
+
+	type newTransfer struct {
+		IPFSHash       string `json:"ipfs_hash" binding:"required"`
+		UseCompression bool   `json:"use_compression" `
+		Tags           []tags `json:"tags"`
+	}
+
+	var nTransfer newTransfer
+
+	err := c.BindJSON(&nTransfer)
+	if err != nil {
+		log.Error(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid payload " + err.Error()})
 		return
 	}
 
-	useCompression := c.Query("use_compression")
-	if useCompression == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "please provide the use_compression parameter in the query ex: ?use_compression=true"})
-		return
-	}
-
-	err := utils.CheckValidityIPFSHash(ipfsHash)
+	err = utils.CheckValidityIPFSHash(nTransfer.IPFSHash)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -40,10 +49,10 @@ func TransferIPFSToArweave(c *gin.Context) {
 		return
 	}
 
-	log.Printf("starting retrieving from IPFS %s", ipfsHash)
+	log.Printf("starting retrieving from IPFS %s", nTransfer.IPFSHash)
 
 	// get from IPFS
-	out, statusCode, err := utils.GetRequest(configuration.Get("ipfsGateway") + ipfsHash)
+	out, statusCode, err := utils.GetRequest(configuration.Get("ipfsGateway") + nTransfer.IPFSHash)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -51,7 +60,7 @@ func TransferIPFSToArweave(c *gin.Context) {
 	log.Printf("IPFS gateway returned status code %d", statusCode)
 
 	// saving it to the filesystem
-	f, err := os.Create(ipfsHash)
+	f, err := os.Create(nTransfer.IPFSHash)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -66,8 +75,16 @@ func TransferIPFSToArweave(c *gin.Context) {
 
 	log.Println("file retrieved successfully from IPFS")
 
+	var arTags []arweave.Tag
+	for _, tag := range nTransfer.Tags {
+		arTags = append(arTags, arweave.Tag{
+			Name:  tag.Key,
+			Value: tag.Value,
+		})
+	}
+
 	// uploading it to Arweave
-	txID, payloadLen, err := arweave.Transfer(ipfsHash, useCompression, ipfsHash, configuration)
+	txID, payloadLen, err := arweave.Transfer(nTransfer.IPFSHash, nTransfer.UseCompression, arTags, configuration)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -75,19 +92,20 @@ func TransferIPFSToArweave(c *gin.Context) {
 
 	log.Printf("Transfer to Arweave finished successfully. Tx ID %s", txID)
 
-	err = cleanup(configuration, ipfsHash)
+	err = cleanup(configuration, nTransfer.IPFSHash)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "transfer completed but I couldn't cleanup the file " + err.Error()})
 		return
 	}
 
-	err = cleanup(configuration, ipfsHash+".zip")
+	err = cleanup(configuration, nTransfer.IPFSHash+".zip")
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "transfer completed but I couldn't cleanup the file " + err.Error()})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"id": txID, "payload_bytes": payloadLen, "duration": fmt.Sprintf("%s", time.Since(start))})
+
 }
 
 // deletes a file if the configuration is set to cleanup = true
@@ -103,21 +121,3 @@ func cleanup(configuration *configs.ViperConfiguration, filename string) error {
 	}
 	return nil
 }
-
-// TODO: what to do with this ....oO
-// checks for a more descriptie error
-//func parseArweaveError(payload string) string {
-//	if strings.Contains(payload, "208") {
-//		return "transaction has already been submitted"
-//	}
-//	if strings.Contains(payload, "400") {
-//		return "the transaction is invalid, couldn't be verified, or the arweave does not have suffucuent funds"
-//	}
-//	if strings.Contains(payload, "429") {
-//		return "the request has exceeded the clients rate limit quota"
-//	}
-//	if strings.Contains(payload, "500") {
-//		return "the nodes was unable to verify the transaction"
-//	}
-//	return payload
-//}
