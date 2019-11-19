@@ -7,12 +7,11 @@ A bridge to connect IPFS to Arweave
 ### Features
 
 - only couple of requests
-- you easily split it into multiple services
-- load balance it, use multiple wallets not just one
+- handles compression / extractions for you (optional)
 - easy to integrated with almost anything (logging, monitoring etc.)
 - no ipfs running in the background needed, no hooverd needed
 
-### How to use it
+### How to use it (Ubuntu only)
 
 Tested on ubuntu 19.04
 
@@ -20,6 +19,8 @@ Tested on ubuntu 19.04
 - If you use Ubuntu, get the binary file **iab**, if not you'll have to build/run it
 - Copy the configuration.json file in the same directory (modify it to your liking)
 - run ./iab **defaults on 0.0.0.0:5555**
+
+* If you want to use it on other platforms, either use the Dockerfile or build it yourself
 
 ### Docker
 
@@ -37,6 +38,7 @@ in the root directory run:
 
 ~~~~
 go build -o YOUR_BINARY_NAME
+./YOUR_BINARY_NAME
 ~~~~
 
 for installing go check: https://golang.org/doc/install
@@ -106,9 +108,10 @@ output:
 ~~~~
    
 #### :point_right: Transfer from IPFS to Arweave
-##### GET /api/transfer?hash=IPFS_HASH_HERE
+##### GET /api/transfer?hash=IPFS_HASH_HERE&use_compression=BOOLEAN
 
-> example: /api/transfer?hash=QmUNXr47Bja3aHUMfhXX5mMWTFJKuoUGETcA48vHG7dhag
+> example: /api/transfer?hash=QmUNXr47Bja3aHUMfhXX5mMWTFJKuoUGETcA48vHG7dhag&use_compression=true
+
 
 output:
 ~~~~
@@ -153,7 +156,7 @@ content of the file from IPFS
 
 ##### GET /api/arweave?transaction_id=TRANSACTION_ID&decode=true
 
-> example: /api/arweave?transaction_id=GyrTvuUBK9AgVLGBA8SsOHkUYmWApNqvJtMjJZZIvbQ&decode=true
+> example: /api/arweave?transaction_id=GyrTvuUBK9AgVLGBA8SsOHkUYmWApNqvJtMjJZZIvbQ&decode=BOOLEAN&extract=BOOLEAN
 
 output:
 ~~~~
@@ -163,6 +166,7 @@ content of the file from Arweave
 Where:
 
 - **decoded** (true or false) if you want it decoded or not
+- **extract** (true or false) if you posted zipped, it will unzip it 
 
 ### Special thanks to:
 
