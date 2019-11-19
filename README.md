@@ -64,7 +64,7 @@ Where:
 - **nodeURL** how to connect to arweave
 - **ipfsGateway** - your IPFS gateway. See below
 - **walletFile** the json AR wallet file location
-- **cleanup** deletes the files after they get retried
+- **cleanup** deletes the files after they get retrieved
 - **server's ip/port**: how to run this API service
 
 about IPFS gateway:
@@ -177,12 +177,10 @@ fell free to create an issue
 - [x] compression
 - [x] docker
 - [x] golang-ci yml
-- [] tags !
+- [x] tags !
 - [ ] awaiting your idea
 
 
-// without compression: TIGLEi0r85E1SDwsyXiU9YgnnOdvdd8VKcn03zI3Jo4
-// with compression: Pz_VcgcS6hC3xWDsbqBXzeXlwTxqGtYLvA75lonNbHs
 ## Project Values
 
 This project has a few principle-based goals that guide its development:
