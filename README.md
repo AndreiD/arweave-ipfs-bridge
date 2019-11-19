@@ -4,6 +4,10 @@
 
 A bridge to connect IPFS to Arweave
 
+<p align="center">
+   <img alt="how it looks" height="500" src="https://raw.githubusercontent.com/AndreiD/arweave-ipfs-bridge/master/assets/howitlooks.png">
+ </p>
+
 ### Features
 
 - only couple of requests
