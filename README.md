@@ -159,7 +159,7 @@ What if you want to host your own gateway ?
 make sure you crete an api that will just accept a ipfs hash after the "/"
 
 
-## API Endpoints
+## Other API Endpoints
 
 #### :point_right: Ping
 ##### GET /api/ping 
@@ -185,9 +185,7 @@ output:
 ~~~~
    
 
-
-   
-#### :point_right: Retrive a transaction or check if it's pending
+#### :point_right: Retrieve a transaction or check if it's pending
 ##### GET /api/check_tx_arweave?transaction_id=TRANSACTION_ID
 
 > example: /api/check_tx_arweave?transaction_id=bnRQhVkook_lPv8uxuDRcj-wC5R2nfVps-2qA6-81WU
@@ -229,7 +227,7 @@ Where:
 
 ### Special thanks to:
 
-https://github.com/Dev43/arweave-go -> for the transaction signing & transmitting code
+https://github.com/Dev43/arweave-go -> for the transaction signing & sending code
 
 ### Bugs / Features / Questions
 
