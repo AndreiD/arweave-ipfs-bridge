@@ -225,6 +225,38 @@ Where:
 - **decoded** (true or false) if you want it decoded or not
 - **extract** (true or false) if you posted zipped, it will unzip it 
 
+
+
+
+#### :point_right: Post content directly to Arweave
+
+##### POST /api/transfer_arweave
+
+with:
+~~~~
+{
+    "payload": "CXR4SUQsIHBheWxvYWRMZW4sIGVyciA6PSBhcndlYXZlLlRyYW5zZmVyRGlyZWN0bHlBcndlYXZlKG5UcmFuc2Zlci5QYXlsb2FkLCBhclRhZ3MsIGNvbmZpZ3VyYXRpb24pCglpZiBlcnIgIT0gbmlsIHsKCQljLkpTT04oaHR0cC5TdGF0dXNCYWRSZXF1ZXN0LCBnaW4uSHsiZXJyb3IiOiBlcnIuRXJyb3IoKX0pCgkJcmV0dXJuCgl9CgoJbG9nLlByaW50ZigiVHJhbnNmZXIgdG8gQXJ3ZWF2ZSBmaW5pc2hlZCBzdWNjZXNzZnVsbHkuIFR4IElEICVzIiwgdHhJRCkKCgljLkpTT04oaHR0cC5TdGF0dXNPSywgZ2luLkh7ImlkIjogdHhJRCwgInBheWxvYWRfYnl0ZXMiOiBwYXlsb2FkTGVuLCAiZHVyYXRpb24iOiBmbXQuU3ByaW50ZigiJXMiLCB0aW1lLlNpbmNlKHN0YXJ0KSl9KQ==",
+    "tags": [
+        {
+            "key": "key1",
+            
+           "value": "value1"
+        },
+        {
+            "key2": "value2"
+        }
+    ]
+}
+~~~~
+
+Where:
+
+- **decoded** (true or false) if you want it decoded or not
+- **extract** (true or false) if you posted zipped, it will unzip it 
+
+
+
+
 ### Special thanks to:
 
 https://github.com/Dev43/arweave-go -> for the transaction signing & sending code

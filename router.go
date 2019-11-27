@@ -24,6 +24,9 @@ func InitializeRouter() {
 	// transfer a file from IFPS to AR
 	api.POST("/transfer", handlers.TransferIPFSToArweave)
 
+	// transfer a file directly to AR
+	api.POST("/transfer_arweave", handlers.TransferToArweave)
+
 	// checks if a tx has been mined
 	api.GET("/check_tx_arweave", handlers.CheckTxArweave)
 

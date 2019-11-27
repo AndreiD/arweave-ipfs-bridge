@@ -61,6 +61,32 @@ func (tr *Transactor) CreateTransaction(ctx context.Context, ipfsHash string, ta
 	return tx, nil
 }
 
+// CreateTransactionArweave creates a brand new transaction
+func (tr *Transactor) CreateTransactionArweave(ctx context.Context, tags []Tag, w WalletSigner, amount string, data []byte, target string) (*Transaction, error) {
+	lastTx, err := tr.Client.TxAnchor(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	price, err := tr.Client.GetReward(ctx, data)
+	if err != nil {
+		return nil, err
+	}
+
+	// Non encoded transaction fields
+	tx := NewTransactionArweave(
+		tags,
+		lastTx,
+		w.PubKeyModulus(),
+		amount,
+		target,
+		data,
+		price,
+	)
+
+	return tx, nil
+}
+
 // SendTransaction formats the transactions (base64url encodes the necessary fields)
 // marshalls the Json and sends it to the arweave network
 func (tr *Transactor) SendTransaction(ctx context.Context, tx *Transaction) (string, error) {
