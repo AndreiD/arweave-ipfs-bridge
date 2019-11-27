@@ -85,8 +85,6 @@ func Transfer(ipfsHash string, useCompression bool, tags []Tag, configuration *c
 // TransferDirectlyArweave on arweave blockchain. Returns transaction hash, error
 func TransferDirectlyArweave(payload string, tags []Tag, configuration *configs.ViperConfiguration) (string, int, error) {
 
-	buf := new(bytes.Buffer)
-
 	ar, err := NewTransactor(configuration.Get("nodeURL"))
 	if err != nil {
 		return "", -1, err
@@ -98,7 +96,7 @@ func TransferDirectlyArweave(payload string, tags []Tag, configuration *configs.
 		return "", -1, err
 	}
 
-	log.Printf("creating a transaction with a payload of %d bytes", buf.Len())
+	log.Printf("creating a transaction with a payload of %d bytes", len([]byte(payload)))
 
 	txBuilder, err := ar.CreateTransactionArweave(context.Background(), tags, arWallet, "0", []byte(payload), "")
 	if err != nil {
@@ -119,5 +117,5 @@ func TransferDirectlyArweave(payload string, tags []Tag, configuration *configs.
 
 	log.Printf("arweave node responded %s", resp)
 
-	return txn.Hash(), buf.Len(), nil
+	return txn.Hash(), len([]byte(payload)), nil
 }
