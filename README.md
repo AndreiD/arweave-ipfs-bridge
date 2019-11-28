@@ -24,7 +24,7 @@ Tested on ubuntu 19.04
 - If you use Ubuntu, get the binary file **iab**, if not you'll have to build/run it
 - Copy the configuration.json file in the same directory (modify it to your liking)
 - run ./iab  
-- API is live on **http://localhost:5555**
+- API will run on **http://localhost:5555**
 
 * If you want to use it on other platforms, either use the Dockerfile or build it yourself
 
