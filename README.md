@@ -2,7 +2,7 @@
 
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AndreiD/arweave-ipfs-bridge/blob/master/LICENSE)
 
-A bridge to connect IPFS to Arweave
+A bridge to connect IPFS to Arweave https://www.arweave.org/
 
 <p align="center">
   <p align="center">Click on the image to enlarge it</p>
